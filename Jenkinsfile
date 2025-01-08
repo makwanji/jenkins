@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS = credentials('docker-hub')
-        REPO = 'makwanji/web-app:v0.1.0'
+        REPO = 'makwanji/web-app'
     }
 
     stages {
