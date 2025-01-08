@@ -2,19 +2,34 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS = credentials('docker-hub') // Replace with your Docker Hub credentials ID
-        REPO = 'your-dockerhub-username/your-image-name' // Replace with your Docker Hub repository
+        DOCKER_CREDENTIALS = credentials('docker-hub')
+        REPO = 'makwanji'
+        IMAGE_SVCA = 'we-app-service-a'
+        IMAGE_SVCB = 'we-app-service-b'
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/your-repo.git'
+                git branch: 'demo1', url: 'https://github.com/makwanji/jenkins.git'
             }
         }
         stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t $REPO:latest .'
+            // steps {
+            //     sh 'docker build -t $REPO:latest .'
+            // }
+
+            parallel {
+                stage('Service A') {
+                    steps {
+                        sh 'cd service-a && docker build -t $REPO/$IMAGE_SVCA:latest .'
+                    }
+                }
+                stage('Service B') {
+                    steps {
+                        sh 'cd service-b && docker build -t $REPO/$IMAGE_SVCB:latest .'
+                    }
+                }
             }
         }
         stage('Login to Docker Hub') {
@@ -23,8 +38,22 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-            steps {
-                sh 'docker push $REPO:latest'
+            // steps {
+            //     sh 'docker push $REPO:latest'
+            // }
+
+
+            parallel {
+                stage('Service A') {
+                    steps {
+                        sh 'docker push $REPO/$IMAGE_SVCA:latest'
+                    }
+                }
+                stage('Service B') {
+                    steps {
+                        sh 'docker push $REPO/$IMAGE_SVCB:latest'
+                    }
+                }
             }
         }
     }
