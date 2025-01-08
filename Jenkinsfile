@@ -22,12 +22,12 @@ pipeline {
             parallel {
                 stage('Service A') {
                     steps {
-                        sh 'cd service-a && docker build -t $REPO/$IMAGE_SVCA:latest'
+                        sh 'cd service-a && docker build -t $REPO/$IMAGE_SVCA:latest .'
                     }
                 }
                 stage('Service B') {
                     steps {
-                        sh 'cd service-b && docker build -t $REPO/$IMAGE_SVCB:latest'
+                        sh 'cd service-b && docker build -t $REPO/$IMAGE_SVCB:latest .'
                     }
                 }
             }
