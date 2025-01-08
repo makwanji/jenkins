@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS = credentials('docker-hub')
-        REPO = 'makwanji/web-app'
+        REPO = 'makwanji'
         IMAGE_SVCA = 'we-app-service-a'
         IMAGE_SVCB = 'we-app-service-b'
     }
