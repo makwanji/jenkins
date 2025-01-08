@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/makwanji/jenkins.git'
+                git branch: 'demo1', url: 'https://github.com/makwanji/jenkins.git'
             }
         }
         stage('Build Docker Image') {
