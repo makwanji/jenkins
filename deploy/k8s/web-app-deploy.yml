@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: adnsgpg
+  name: 'web-app'
+spec:
+  selector:
+    matchLabels:
+      app: web-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+      - name: web-app
+          imagePullPolicy: Always
+          image: 'makwanji/web-app:v0.1.0'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%

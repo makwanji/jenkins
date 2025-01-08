@@ -1,0 +1,24 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: web-app
+  namespace: adnsgpg
+spec:
+  host: web-app-adnsgpg.apps.ocp.adnovum.ch
+  to:
+    kind: Service
+    name: web-app
+    weight: 100
+  port:
+    targetPort: 8000
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: web-app-adnsgpg.apps.ocp.adnovum.ch
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+          lastTransitionTime: '2025-01-03T04:16:22Z'
+      wildcardPolicy: None
+      routerCanonicalHostname: router-default.apps.ocp.adnovum.ch
